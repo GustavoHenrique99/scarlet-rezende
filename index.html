@@ -24,6 +24,15 @@
                     fontFamily: {
                         'serif': ['"Playfair Display"', 'serif'],
                         'sans': ['Montserrat', 'sans-serif'],
+                    },
+                    animation: {
+                        'slow-zoom': 'zoomOut 20s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        zoomOut: {
+                            '0%': { transform: 'scale(1.05)' },
+                            '100%': { transform: 'scale(1)' },
+                        }
                     }
                 }
             }
@@ -33,12 +42,14 @@
     <style>
         html {
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
         
         body {
             font-family: 'Montserrat', sans-serif;
             background-color: #111111;
             color: #F5EFE6;
+            overflow-x: hidden;
         }
 
         h1, h2, h3, h4, h5, h6, .font-serif {
@@ -47,126 +58,162 @@
 
         /* Glassmorphism Effect */
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(197, 168, 128, 0.15); /* Borda levemente dourada/transparente */
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(197, 168, 128, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(197, 168, 128, 0.4);
+            box-shadow: 0 10px 40px rgba(197, 168, 128, 0.15);
+            transform: translateY(-8px);
         }
 
         .glass-header {
-            background: rgba(17, 17, 17, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(17, 17, 17, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
 
-        /* Scroll Animation (Fade-in up) */
-        .fade-in-section {
+        /* Reveal Animations */
+        .reveal-up {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-            will-change: opacity, visibility;
+            transform: translateY(50px);
+            transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
-        .fade-in-section.is-visible {
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        
+        .is-visible {
             opacity: 1;
-            transform: none;
+            transform: translate(0);
         }
+
+        /* Atrasos em cascata para grids */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
 
         /* Floating WhatsApp Button */
         .float-wpp {
             position: fixed;
-            width: 60px;
-            height: 60px;
-            bottom: 30px;
-            right: 30px;
+            width: 55px;
+            height: 55px;
+            bottom: 20px;
+            right: 20px;
             background-color: #25d366;
             color: #FFF;
-            border-radius: 50px;
+            border-radius: 50%;
             text-align: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 15px rgba(0,0,0,0.3);
+            font-size: 28px;
+            box-shadow: 2px 2px 15px rgba(0,0,0,0.4);
             z-index: 100;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        @media (min-width: 768px) {
+            .float-wpp {
+                width: 60px;
+                height: 60px;
+                bottom: 30px;
+                right: 30px;
+                font-size: 30px;
+            }
         }
         .float-wpp:hover {
-            transform: scale(1.1);
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 0 20px rgba(37, 211, 102, 0.6);
         }
     </style>
 </head>
 <body class="antialiased selection:bg-gold selection:text-deep-black">
 
-    <header class="fixed w-full top-0 z-50 glass-header transition-all duration-300" id="navbar">
+    <header class="fixed w-full top-0 z-50 transition-all duration-500 bg-transparent" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
+            <div class="flex justify-between items-center h-20 md:h-24">
                 <div class="flex-shrink-0 flex items-center">
-                    <a href="#" class="font-serif text-2xl font-bold text-nude tracking-widest">
+                    <a href="#" class="font-serif text-xl md:text-2xl font-bold text-nude tracking-widest">
                         DRA. SCARLET <span class="text-gold">REZENDE</span>
                     </a>
                 </div>
                 
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#sobre" class="text-nude hover:text-gold transition-colors duration-300 text-sm font-medium tracking-wide">SOBRE</a>
-                    <a href="#procedimentos" class="text-nude hover:text-gold transition-colors duration-300 text-sm font-medium tracking-wide">PROCEDIMENTOS</a>
-                    <a href="#resultados" class="text-nude hover:text-gold transition-colors duration-300 text-sm font-medium tracking-wide">RESULTADOS</a>
-                    <a href="#agendamentos" class="text-nude hover:text-gold transition-colors duration-300 text-sm font-medium tracking-wide">AGENDAMENTOS</a>
+                <nav class="hidden md:flex space-x-10">
+                    <a href="#sobre" class="text-nude hover:text-gold transition-colors duration-300 text-xs md:text-sm font-medium tracking-widest uppercase">Sobre</a>
+                    <a href="#procedimentos" class="text-nude hover:text-gold transition-colors duration-300 text-xs md:text-sm font-medium tracking-widest uppercase">Procedimentos</a>
+                    <a href="#resultados" class="text-nude hover:text-gold transition-colors duration-300 text-xs md:text-sm font-medium tracking-widest uppercase">Resultados</a>
+                    <a href="#agendamentos" class="text-nude hover:text-gold transition-colors duration-300 text-xs md:text-sm font-medium tracking-widest uppercase">Agendamentos</a>
                 </nav>
 
                 <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-nude hover:text-gold focus:outline-none">
-                        <i class="fas fa-bars text-2xl"></i>
+                    <button id="mobile-menu-btn" class="text-nude hover:text-gold focus:outline-none transition-transform duration-300">
+                        <i class="fas fa-bars text-2xl" id="menu-icon"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <div id="mobile-menu" class="hidden md:hidden bg-deep-black border-t border-gray-800">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center">
-                <a href="#sobre" class="block px-3 py-2 text-nude hover:text-gold transition-colors text-sm font-medium tracking-wider">SOBRE</a>
-                <a href="#procedimentos" class="block px-3 py-2 text-nude hover:text-gold transition-colors text-sm font-medium tracking-wider">PROCEDIMENTOS</a>
-                <a href="#resultados" class="block px-3 py-2 text-nude hover:text-gold transition-colors text-sm font-medium tracking-wider">RESULTADOS</a>
-                <a href="#agendamentos" class="block px-3 py-2 text-nude hover:text-gold transition-colors text-sm font-medium tracking-wider">AGENDAMENTOS</a>
+        <div id="mobile-menu" class="absolute top-full left-0 w-full glass-header overflow-hidden transition-all duration-300 max-h-0 md:hidden opacity-0">
+            <div class="px-4 py-6 space-y-4 text-center">
+                <a href="#sobre" class="block py-3 text-nude hover:text-gold transition-colors text-sm font-medium tracking-widest uppercase border-b border-gray-800/50">Sobre</a>
+                <a href="#procedimentos" class="block py-3 text-nude hover:text-gold transition-colors text-sm font-medium tracking-widest uppercase border-b border-gray-800/50">Procedimentos</a>
+                <a href="#resultados" class="block py-3 text-nude hover:text-gold transition-colors text-sm font-medium tracking-widest uppercase border-b border-gray-800/50">Resultados</a>
+                <a href="#agendamentos" class="block py-3 text-nude hover:text-gold transition-colors text-sm font-medium tracking-widest uppercase">Agendamentos</a>
             </div>
         </div>
     </header>
 
-    <section class="relative min-h-screen flex items-center justify-center pt-20">
+    <section class="relative min-h-[100svh] flex items-center justify-center pt-20 overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Dra. Scarlet Rezende" class="w-full h-full object-cover object-center" />
-            <div class="absolute inset-0 bg-deep-black/80"></div>
+            <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Dra. Scarlet Rezende" class="w-full h-full object-cover object-center animate-slow-zoom" />
+            <div class="absolute inset-0 bg-deep-black/70 sm:bg-deep-black/80"></div>
             <div class="absolute inset-0 bg-gradient-to-t from-deep-black via-transparent to-transparent"></div>
         </div>
 
-        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto fade-in-section">
-            <h1 class="font-serif text-5xl md:text-7xl text-nude mb-6 leading-tight">
-                Mais que um sorriso, <br><span class="text-gold italic">a sua melhor versão</span>
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto mt-10 md:mt-0 reveal-up">
+            <h1 class="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-nude mb-4 md:mb-6 leading-[1.1]">
+                Mais que um sorriso, <br><span class="text-gold italic font-light">a sua melhor versão</span>
             </h1>
-            <p class="text-lg md:text-xl text-gray-300 mb-10 font-light tracking-wide">
-                Referência em Odontologia e Estética Facial.
+            <p class="text-base sm:text-lg md:text-xl text-gray-300 mb-8 md:mb-12 font-light tracking-wide max-w-2xl mx-auto">
+                Referência em Odontologia e Harmonização Orofacial.
             </p>
-            <a href="#procedimentos" class="inline-block border border-gold text-gold hover:bg-gold hover:text-deep-black transition-all duration-300 px-8 py-4 rounded-full font-medium tracking-wide uppercase text-sm">
+            <a href="#procedimentos" class="inline-block bg-transparent border border-gold text-gold hover:bg-gold hover:text-deep-black transition-all duration-500 px-6 py-3 md:px-10 md:py-4 rounded-full font-medium tracking-widest uppercase text-xs md:text-sm shadow-[0_0_15px_rgba(197,168,128,0.2)] hover:shadow-[0_0_30px_rgba(197,168,128,0.6)]">
                 Mais informações abaixo
             </a>
         </div>
     </section>
 
-    <section id="sobre" class="bg-nude py-24 text-deep-black">
+    <section id="sobre" class="bg-nude py-16 md:py-24 text-deep-black overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center fade-in-section">
-                <div class="order-2 md:order-1 relative">
-                    <img src="img/scarlet.jpg" alt="Dra. Scarlet Rezende" class="rounded-lg shadow-2xl w-full object-cover h-[500px]">
-                    <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-gold rounded-full opacity-20 -z-10"></div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <div class="order-2 lg:order-1 relative reveal-left">
+                    <img src="https://via.placeholder.com/800x1000/cccccc/666666?text=FOTO+DRA.+SCARLET" alt="Dra. Scarlet Rezende" class="rounded-xl shadow-2xl w-full object-cover h-[400px] md:h-[600px] lg:h-[700px] transition-transform duration-700 hover:scale-[1.02]">
+                    <div class="absolute -bottom-4 -right-4 md:-bottom-8 md:-right-8 w-24 h-24 md:w-40 md:h-40 bg-gold rounded-full opacity-20 -z-10 animate-pulse"></div>
+                    <div class="absolute -top-4 -left-4 md:-top-8 md:-left-8 w-16 h-16 md:w-24 md:h-24 border border-gold rounded-full opacity-40 -z-10"></div>
                 </div>
-                <div class="order-1 md:order-2">
-                    <h2 class="font-serif text-4xl md:text-5xl mb-6">Dra. Scarlet <span class="text-gold">Rezende</span></h2>
-                    <h3 class="text-xl text-gray-600 mb-6 font-medium">Especialista em Odontologia & Estética Facial</h3>
-                    <p class="text-gray-700 leading-relaxed mb-6 font-light">
+                <div class="order-1 lg:order-2 reveal-right text-center lg:text-left">
+                    <span class="text-gold uppercase tracking-widest text-xs md:text-sm font-semibold mb-2 block">Conheça a Especialista</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-4 md:mb-6">Dra. Scarlet <span class="text-gold">Rezende</span></h2>
+                    <h3 class="text-lg md:text-xl text-gray-600 mb-6 font-medium">Especialista em Odontologia & Estética Facial</h3>
+                    <p class="text-sm md:text-base text-gray-700 leading-relaxed mb-4 md:mb-6 font-light">
                         Com um olhar estético apurado e compromisso inabalável com a segurança, a Dra. Scarlet Rezende alia ciência e arte para entregar resultados naturais e sofisticados. 
                     </p>
-                    <p class="text-gray-700 leading-relaxed font-light mb-8">
+                    <p class="text-sm md:text-base text-gray-700 leading-relaxed font-light mb-8">
                         Sua abordagem foca não apenas na estética, mas na excelência clínica e no bem-estar integral do paciente, utilizando técnicas avançadas para resgatar a autoestima de forma elegante e sutil.
                     </p>
                 </div>
@@ -174,156 +221,163 @@
         </div>
     </section>
 
-    <section id="procedimentos" class="bg-deep-black py-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
-            <div class="text-center mb-16">
-                <span class="text-gold uppercase tracking-widest text-sm font-semibold">Portfólio de Serviços</span>
-                <h2 class="font-serif text-4xl md:text-5xl text-nude mt-4">Procedimentos</h2>
+    <section id="procedimentos" class="bg-deep-black py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 md:mb-20 reveal-up">
+                <span class="text-gold uppercase tracking-widest text-xs md:text-sm font-semibold">Portfólio de Serviços</span>
+                <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl text-nude mt-4">Procedimentos</h2>
+                <div class="w-16 h-px bg-gold mx-auto mt-6"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300">
-                    <i class="fa-solid fa-tooth text-3xl text-gold mb-6"></i>
-                    <h3 class="font-serif text-2xl text-nude mb-4">Profilaxia</h3>
-                    <p class="text-sm text-gray-400 font-light">Limpeza profunda e profissional, prevenindo doenças e garantindo a saúde impecável dos seus dentes e gengivas.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <div class="glass-card p-6 md:p-8 rounded-2xl reveal-up delay-100">
+                    <i class="fa-solid fa-tooth text-3xl md:text-4xl text-gold mb-4 md:mb-6 drop-shadow-[0_0_10px_rgba(197,168,128,0.5)]"></i>
+                    <h3 class="font-serif text-xl md:text-2xl text-nude mb-3 md:mb-4">Profilaxia</h3>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Limpeza profunda e profissional, prevenindo doenças e garantindo a saúde impecável dos seus dentes e gengivas.</p>
                 </div>
                 
-                <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300">
-                    <i class="fa-solid fa-wand-magic-sparkles text-3xl text-gold mb-6"></i>
-                    <h3 class="font-serif text-2xl text-nude mb-4">Restauração</h3>
-                    <p class="text-sm text-gray-400 font-light">Devolução da forma, função e estética dos dentes com materiais de altíssima qualidade e imperceptíveis.</p>
+                <div class="glass-card p-6 md:p-8 rounded-2xl reveal-up delay-200">
+                    <i class="fa-solid fa-wand-magic-sparkles text-3xl md:text-4xl text-gold mb-4 md:mb-6 drop-shadow-[0_0_10px_rgba(197,168,128,0.5)]"></i>
+                    <h3 class="font-serif text-xl md:text-2xl text-nude mb-3 md:mb-4">Restauração</h3>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Devolução da forma, função e estética dos dentes com materiais de altíssima qualidade e imperceptíveis.</p>
                 </div>
 
-                <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300">
-                    <i class="fa-regular fa-face-smile text-3xl text-gold mb-6"></i>
-                    <h3 class="font-serif text-2xl text-nude mb-4">Clareamento</h3>
-                    <p class="text-sm text-gray-400 font-light">Técnicas seguras e avançadas para um sorriso brilhante, iluminando sua expressão com naturalidade.</p>
+                <div class="glass-card p-6 md:p-8 rounded-2xl reveal-up delay-300">
+                    <i class="fa-regular fa-face-smile text-3xl md:text-4xl text-gold mb-4 md:mb-6 drop-shadow-[0_0_10px_rgba(197,168,128,0.5)]"></i>
+                    <h3 class="font-serif text-xl md:text-2xl text-nude mb-3 md:mb-4">Clareamento</h3>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Técnicas seguras e avançadas para um sorriso brilhante, iluminando sua expressão com naturalidade.</p>
                 </div>
 
-                <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300">
-                    <i class="fa-solid fa-syringe text-3xl text-gold mb-6"></i>
-                    <h3 class="font-serif text-2xl text-nude mb-4">Extração</h3>
-                    <p class="text-sm text-gray-400 font-light">Procedimentos cirúrgicos realizados com o máximo de conforto, técnica refinada e recuperação otimizada.</p>
+                <div class="glass-card p-6 md:p-8 rounded-2xl reveal-up delay-100">
+                    <i class="fa-solid fa-syringe text-3xl md:text-4xl text-gold mb-4 md:mb-6 drop-shadow-[0_0_10px_rgba(197,168,128,0.5)]"></i>
+                    <h3 class="font-serif text-xl md:text-2xl text-nude mb-3 md:mb-4">Extração</h3>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Procedimentos cirúrgicos realizados com o máximo de conforto, técnica refinada e recuperação otimizada.</p>
                 </div>
 
-                <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300">
-                    <i class="fa-solid fa-teeth-open text-3xl text-gold mb-6"></i>
-                    <h3 class="font-serif text-2xl text-nude mb-4">Prótese</h3>
-                    <p class="text-sm text-gray-400 font-light">Reabilitação oral completa que alia resistência e mimetismo estético perfeito com dentes naturais.</p>
+                <div class="glass-card p-6 md:p-8 rounded-2xl reveal-up delay-200">
+                    <i class="fa-solid fa-teeth-open text-3xl md:text-4xl text-gold mb-4 md:mb-6 drop-shadow-[0_0_10px_rgba(197,168,128,0.5)]"></i>
+                    <h3 class="font-serif text-xl md:text-2xl text-nude mb-3 md:mb-4">Prótese</h3>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Reabilitação oral completa que alia resistência e mimetismo estético perfeito com dentes naturais.</p>
                 </div>
 
-                <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300">
-                    <i class="fa-solid fa-spa text-3xl text-gold mb-6"></i>
-                    <h3 class="font-serif text-2xl text-nude mb-4">Botox</h3>
-                    <p class="text-sm text-gray-400 font-light">Suavização elegante de linhas de expressão, prevenindo o envelhecimento sem perder a naturalidade.</p>
+                <div class="glass-card p-6 md:p-8 rounded-2xl reveal-up delay-300">
+                    <i class="fa-solid fa-spa text-3xl md:text-4xl text-gold mb-4 md:mb-6 drop-shadow-[0_0_10px_rgba(197,168,128,0.5)]"></i>
+                    <h3 class="font-serif text-xl md:text-2xl text-nude mb-3 md:mb-4">Botox</h3>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Suavização elegante de linhas de expressão, prevenindo o envelhecimento sem perder a naturalidade.</p>
                 </div>
 
-                <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300">
-                    <i class="fa-solid fa-droplet text-3xl text-gold mb-6"></i>
-                    <h3 class="font-serif text-2xl text-nude mb-4">Preenchimento</h3>
-                    <p class="text-sm text-gray-400 font-light"><span class="text-gold">Labial & Facial.</span> Volumização estratégica, contorno e hidratação profunda para simetria e beleza.</p>
+                <div class="glass-card p-6 md:p-8 rounded-2xl reveal-up delay-100">
+                    <i class="fa-solid fa-droplet text-3xl md:text-4xl text-gold mb-4 md:mb-6 drop-shadow-[0_0_10px_rgba(197,168,128,0.5)]"></i>
+                    <h3 class="font-serif text-xl md:text-2xl text-nude mb-3 md:mb-4">Preenchimento</h3>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed"><span class="text-gold">Labial & Facial.</span> Volumização estratégica, contorno e hidratação profunda para simetria e beleza.</p>
                 </div>
 
-                <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300">
-                    <i class="fa-solid fa-user-check text-3xl text-gold mb-6"></i>
-                    <h3 class="font-serif text-2xl text-nude mb-4">Lipo de Papada</h3>
-                    <p class="text-sm text-gray-400 font-light">Procedimento químico que reduz o volume da região submentoniana, redefinindo o contorno do rosto.</p>
+                <div class="glass-card p-6 md:p-8 rounded-2xl reveal-up delay-200">
+                    <i class="fa-solid fa-user-check text-3xl md:text-4xl text-gold mb-4 md:mb-6 drop-shadow-[0_0_10px_rgba(197,168,128,0.5)]"></i>
+                    <h3 class="font-serif text-xl md:text-2xl text-nude mb-3 md:mb-4">Lipo de Papada</h3>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Procedimento químico que reduz o volume da região submentoniana, redefinindo o contorno do rosto.</p>
                 </div>
 
-                <div class="glass-card p-8 rounded-2xl hover:-translate-y-2 transition-transform duration-300">
-                    <i class="fa-solid fa-vial text-3xl text-gold mb-6"></i>
-                    <h3 class="font-serif text-2xl text-nude mb-4">Skinbooster</h3>
-                    <p class="text-sm text-gray-400 font-light">Hidratação injetável profunda que melhora a textura, elasticidade e o brilho natural da pele.</p>
+                <div class="glass-card p-6 md:p-8 rounded-2xl reveal-up delay-300">
+                    <i class="fa-solid fa-vial text-3xl md:text-4xl text-gold mb-4 md:mb-6 drop-shadow-[0_0_10px_rgba(197,168,128,0.5)]"></i>
+                    <h3 class="font-serif text-xl md:text-2xl text-nude mb-3 md:mb-4">Skinbooster</h3>
+                    <p class="text-xs md:text-sm text-gray-400 font-light leading-relaxed">Hidratação injetável profunda que melhora a textura, elasticidade e o brilho natural da pele.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="resultados" class="bg-nude py-24 text-deep-black">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
-            <div class="text-center mb-16">
-                <span class="text-gold uppercase tracking-widest text-sm font-semibold">Transformações</span>
-                <h2 class="font-serif text-4xl md:text-5xl mt-4">Resultados</h2>
-                <p class="mt-4 text-gray-600 font-light">A sutileza do detalhe, a grandiosidade do resultado.</p>
+    <section id="resultados" class="bg-nude py-16 md:py-24 text-deep-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12 md:mb-20 reveal-up">
+                <span class="text-gold uppercase tracking-widest text-xs md:text-sm font-semibold">Transformações</span>
+                <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl mt-4">Resultados</h2>
+                <div class="w-16 h-px bg-gold mx-auto mt-6"></div>
+                <p class="mt-6 text-sm md:text-base text-gray-600 font-light">A sutileza do detalhe, a grandiosidade do resultado.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="relative group overflow-hidden rounded-xl shadow-lg">
-                    <img src="https://images.unsplash.com/photo-1590611936760-eeb9bc50228d?auto=format&fit=crop&w=600&q=80" alt="Resultado Clareamento" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-deep-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <span class="text-nude font-serif text-xl">Clareamento</span>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <div class="relative group overflow-hidden rounded-2xl shadow-lg reveal-up delay-100">
+                    <img src="https://images.unsplash.com/photo-1598256989800-fea5ce5146f2?auto=format&fit=crop&w=800&q=80" alt="Resultado Clareamento" class="w-full h-64 md:h-80 object-cover transition-transform duration-1000 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-deep-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                        <span class="text-gold font-serif text-xl md:text-2xl tracking-wide transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">Clareamento</span>
                     </div>
                 </div>
-                <div class="relative group overflow-hidden rounded-xl shadow-lg">
-                    <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=600&q=80" alt="Resultado Preenchimento Labial" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-deep-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <span class="text-nude font-serif text-xl">Preenchimento Labial</span>
+                <div class="relative group overflow-hidden rounded-2xl shadow-lg reveal-up delay-200">
+                    <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=600&q=80" alt="Resultado Preenchimento Labial" class="w-full h-64 md:h-80 object-cover transition-transform duration-1000 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-deep-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                        <span class="text-gold font-serif text-xl md:text-2xl tracking-wide transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 text-center px-4">Preenchimento Labial</span>
                     </div>
                 </div>
-                <div class="relative group overflow-hidden rounded-xl shadow-lg">
-                    <img src="https://images.unsplash.com/photo-1598256989800-fea5ce5146f2?auto=format&fit=crop&w=600&q=80" alt="Resultado Harmonização" class="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-deep-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <span class="text-nude font-serif text-xl">Harmonização Facial</span>
+                <div class="relative group overflow-hidden rounded-2xl shadow-lg reveal-up delay-300">
+                    <img src="https://images.unsplash.com/photo-1590611936760-eeb9bc50228d?auto=format&fit=crop&w=800&q=80" alt="Resultado Harmonização" class="w-full h-64 md:h-80 object-cover transition-transform duration-1000 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-deep-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center">
+                        <span class="text-gold font-serif text-xl md:text-2xl tracking-wide transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 text-center px-4">Harmonização Facial</span>
                     </div>
                 </div>
             </div>
+            <p class="text-center text-xs md:text-sm text-gray-500 mt-10 font-light italic reveal-up">*Fotos ilustrativas. Os resultados variam de acordo com as características individuais de cada paciente.</p>
         </div>
     </section>
 
-    <footer id="agendamentos" class="bg-deep-black pt-20 pb-10 border-t border-gray-800 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 fade-in-section">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-8 mb-16">
+    <footer id="agendamentos" class="bg-deep-black pt-16 md:pt-24 pb-8 border-t border-gray-800/50 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-gold rounded-full opacity-5 blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal-up">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-8 mb-16 text-center md:text-left">
                 
-                <div>
+                <div class="flex flex-col items-center md:items-start">
                     <a href="#" class="font-serif text-2xl font-bold text-nude tracking-widest block mb-6">
                         DRA. SCARLET <span class="text-gold">REZENDE</span>
                     </a>
-                    <p class="text-gray-400 font-light text-sm leading-relaxed mb-6">
+                    <p class="text-gray-400 font-light text-sm leading-relaxed mb-6 max-w-xs">
                         Nossa missão é alinhar a sua beleza externa à sua autoconfiança interna, proporcionando saúde, estética e bem-estar através da excelência.
                     </p>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-gold hover:border-gold transition-colors">
+                        <a href="#" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-gold hover:border-gold transition-all duration-300 hover:-translate-y-1">
                             <i class="fab fa-instagram"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-gold hover:border-gold transition-colors">
+                        <a href="#" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-gold hover:border-gold transition-all duration-300 hover:-translate-y-1">
                             <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-gold hover:border-gold transition-all duration-300 hover:-translate-y-1">
+                            <i class="fab fa-linkedin-in"></i>
                         </a>
                     </div>
                 </div>
 
-                <div>
-                    <h4 class="font-serif text-xl text-nude mb-6">Fale Conosco</h4>
-                    <ul class="space-y-4">
+                <div class="flex flex-col items-center md:items-start">
+                    <h4 class="font-serif text-xl text-nude mb-6 tracking-wide">Fale Conosco</h4>
+                    <ul class="space-y-4 text-left">
                         <li class="flex items-start text-gray-400 font-light text-sm">
-                            <i class="fas fa-map-marker-alt text-gold mt-1 mr-3"></i>
-                            <span>Ipatinga - MG<br>Edifício Empresarial Premium, Sala 402</span>
+                            <i class="fas fa-map-marker-alt text-gold mt-1 w-6 text-center"></i>
+                            <span class="ml-2">Ipatinga - MG<br>Edifício Empresarial Premium, Sala 402</span>
                         </li>
                         <li class="flex items-center text-gray-400 font-light text-sm">
-                            <i class="fab fa-whatsapp text-gold mr-3"></i>
-                            <span>(31) 99999-9999</span>
+                            <i class="fab fa-whatsapp text-gold w-6 text-center"></i>
+                            <span class="ml-2">(31) 99999-9999</span>
                         </li>
-                        <li class="flex items-center text-gray-400 font-light text-sm">
-                            <i class="far fa-envelope text-gold mr-3"></i>
-                            <span>contato@drascarletrezende.com.br</span>
+                        <li class="flex items-center text-gray-400 font-light text-sm break-all">
+                            <i class="far fa-envelope text-gold w-6 text-center"></i>
+                            <span class="ml-2">contato@drascarletrezende.com.br</span>
                         </li>
                     </ul>
                 </div>
 
-                <div>
-                    <h4 class="font-serif text-xl text-nude mb-4">Pronto para transformar seu sorriso e sua autoestima?</h4>
-                    <p class="text-gray-400 font-light text-sm mb-6">
+                <div class="flex flex-col items-center md:items-start">
+                    <h4 class="font-serif text-xl text-nude mb-4 tracking-wide">Pronto para transformar seu sorriso e sua autoestima?</h4>
+                    <p class="text-gray-400 font-light text-sm mb-6 max-w-xs">
                         Agende uma avaliação e descubra o plano ideal para a sua melhor versão.
                     </p>
-                    <a href="https://wa.me/5531999999999" target="_blank" class="inline-flex items-center bg-gold text-deep-black font-medium tracking-wide px-6 py-3 rounded-md hover:bg-nude transition-colors duration-300 w-full sm:w-auto justify-center">
-                        <i class="fab fa-whatsapp mr-2 text-lg"></i>
+                    <a href="https://wa.me/5531999999999" target="_blank" class="inline-flex items-center bg-gold text-deep-black font-semibold tracking-wide px-6 py-3 rounded-full hover:bg-nude transition-colors duration-300 w-full sm:w-auto justify-center shadow-[0_4px_15px_rgba(197,168,128,0.3)] hover:shadow-[0_6px_25px_rgba(197,168,128,0.5)]">
+                        <i class="fab fa-whatsapp mr-2 text-xl"></i>
                         Fale conosco no WhatsApp
                     </a>
                 </div>
             </div>
 
-            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600 font-light">
+            <div class="border-t border-gray-800/50 pt-8 text-center text-xs text-gray-600 font-light">
                 <p>&copy; 2026 Dra. Scarlet Rezende. Todos os direitos reservados.</p>
-                <p class="mt-2 md:mt-0">Desenvolvido com sofisticação.</p>
             </div>
         </div>
     </footer>
@@ -333,41 +387,72 @@
     </a>
 
     <script>
-        // Toggle Mobile Menu
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
+        // Efeito de background no Header ao fazer Scroll
+        const header = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('glass-header');
+                header.classList.remove('bg-transparent');
+            } else {
+                header.classList.remove('glass-header');
+                header.classList.add('bg-transparent');
+            }
         });
 
-        // Close mobile menu on click (links)
+        // Toggle Mobile Menu com animação fluida
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const icon = document.getElementById('menu-icon');
+
+        btn.addEventListener('click', () => {
+            if (menu.classList.contains('opacity-0')) {
+                // Abre o menu
+                menu.classList.remove('opacity-0', 'max-h-0');
+                menu.classList.add('opacity-100', 'max-h-[400px]');
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+                icon.classList.add('text-gold');
+            } else {
+                // Fecha o menu
+                menu.classList.add('opacity-0', 'max-h-0');
+                menu.classList.remove('opacity-100', 'max-h-[400px]');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+                icon.classList.remove('text-gold');
+            }
+        });
+
+        // Fecha o menu mobile ao clicar em um link
         const mobileLinks = menu.querySelectorAll('a');
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
-                menu.classList.add('hidden');
+                menu.classList.add('opacity-0', 'max-h-0');
+                menu.classList.remove('opacity-100', 'max-h-[400px]');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+                icon.classList.remove('text-gold');
             });
         });
 
-        // Scroll Fade-in Animation
+        // Intersection Observer para as Animações de Reveal
         document.addEventListener("DOMContentLoaded", function() {
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
-                threshold: 0.15
+                threshold: 0.15 // Dispara quando 15% do elemento estiver visível
             };
 
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
+                        observer.unobserve(entry.target); // Para animar apenas 1 vez
                     }
                 });
             }, observerOptions);
 
-            const elements = document.querySelectorAll('.fade-in-section');
-            elements.forEach(el => {
+            const revealElements = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right');
+            revealElements.forEach(el => {
                 observer.observe(el);
             });
         });
