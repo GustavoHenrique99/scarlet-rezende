@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dra. Scarlet Rezende | Odontologia Estética e Harmonização</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        nude: {
+                            light: '#F4EFEA', // Fundo principal
+                            dark: '#E8DFD5'   // Fundo secundário
+                        },
+                        brand: {
+                            brown: '#4A3B32', // Textos e destaques
+                            charcoal: '#333333', // Textos escuros
+                            dark: '#1a1a1a' // Fundo hero
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Smooth Scrolling */
+        html { scroll-behavior: smooth; }
+        
+        /* Fade-in Animation Classes */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Accordion Smooth Height Transition */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 200px; /* Ajuste se o texto for muito longo */
+        }
+        .accordion-item.active .icon-plus {
+            transform: rotate(45deg);
+            transition: transform 0.3s ease;
+        }
+        .icon-plus {
+            transition: transform 0.3s ease;
+        }
+
+        /* Custom Scrollbar for elegance */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F4EFEA; }
+        ::-webkit-scrollbar-thumb { background: #E8DFD5; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4A3B32; }
+    </style>
+</head>
+<body class="font-sans text-brand-charcoal bg-nude-light antialiased">
+
+    <header class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="font-serif font-bold text-xl md:text-2xl text-brand-brown tracking-wider">
+                SR <span class="hidden md:inline text-sm font-sans font-normal tracking-widest ml-2 uppercase">Dra. Scarlet Rezende</span>
+            </div>
+            
+            <nav class="hidden md:flex space-x-8">
+                <a href="#procedimentos" class="text-xs uppercase tracking-widest font-medium hover:text-brand-brown transition-colors">Procedimentos</a>
+                <a href="#resultados" class="text-xs uppercase tracking-widest font-medium hover:text-brand-brown transition-colors">Resultados</a>
+                <a href="#agendamentos" class="text-xs uppercase tracking-widest font-medium hover:text-brand-brown transition-colors">Agendamentos</a>
+            </nav>
+
+            <button id="mobile-menu-btn" class="md:hidden text-2xl focus:outline-none text-brand-brown">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-nude-light shadow-lg border-t border-nude-dark flex-col items-center py-6 space-y-4 md:hidden">
+            <a href="#procedimentos" class="mobile-link text-sm uppercase tracking-widest font-medium text-brand-brown">Procedimentos</a>
+            <a href="#resultados" class="mobile-link text-sm uppercase tracking-widest font-medium text-brand-brown">Resultados</a>
+            <a href="#agendamentos" class="mobile-link text-sm uppercase tracking-widest font-medium text-brand-brown">Agendamentos</a>
+        </div>
+    </header>
+
+    <section id="home" class="relative min-h-screen flex flex-col-reverse lg:flex-row pt-20 lg:pt-0">
+        <div class="w-full lg:w-1/2 flex flex-col justify-center px-8 lg:px-20 py-16 bg-nude-light z-10 fade-in">
+            <h2 class="text-xs uppercase tracking-[0.3em] text-brand-brown mb-4 font-semibold">Odontologia de Alto Padrão</h2>
+            <h1 class="font-serif text-5xl lg:text-7xl text-brand-brown leading-tight mb-6">
+                A arte de <br> esculpir <i class="font-light">sorrisos</i>.
+            </h1>
+            <p class="text-brand-charcoal font-light leading-relaxed mb-10 max-w-md">
+                Especialista em Odontologia Estética e Harmonização Orofacial. Descubra a sua melhor versão com naturalidade, segurança e sofisticação clínica.
+            </p>
+            <div>
+                <a href="#agendamentos" class="inline-block border border-brand-brown text-brand-brown px-8 py-4 uppercase text-xs tracking-widest hover:bg-brand-brown hover:text-white transition-all duration-300">
+                    Agendar Avaliação
+                </a>
+            </div>
+            
+            <div class="absolute bottom-8 left-8 lg:left-20 flex items-center space-x-4 opacity-70 hidden md:flex animate-pulse">
+                <span class="text-[10px] uppercase tracking-widest font-semibold text-brand-brown">Mais informações abaixo</span>
+                <div class="w-12 h-[1px] bg-brand-brown"></div>
+            </div>
+        </div>
+
+        <div class="w-full lg:w-1/2 bg-brand-dark relative min-h-[50vh] lg:min-h-screen flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-dark to-transparent opacity-60 z-10"></div>
+            <img src="https://images.unsplash.com/photo-1590611936760-eeb9bcab58dc?auto=format&fit=crop&q=80&w=1000" alt="Dra. Scarlet Rezende" class="absolute w-full h-full object-cover opacity-80 mix-blend-luminosity">
+            <div class="relative z-20 text-center px-6">
+                <div class="font-serif text-6xl text-white opacity-20 mb-4">SR</div>
+                <h3 class="text-white font-serif text-2xl tracking-wide">Dra. Scarlet Rezende</h3>
+                <p class="text-nude-dark font-light text-sm tracking-widest mt-2 uppercase">Cirurgiã Dentista</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="procedimentos" class="py-24 bg-nude-dark">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="font-serif text-4xl lg:text-5xl text-brand-brown mb-4">Procedimentos</h2>
+                <p class="font-light text-brand-charcoal tracking-wide">Excelência em cada detalhe do seu tratamento.</p>
+            </div>
+
+            <div class="space-y-4 fade-in">
+                <div class="accordion-item border-b border-brand-brown/30 pb-4">
+                    <button class="w-full flex justify-between items-center py-4 focus:outline-none">
+                        <span class="font-serif text-xl text-brand-brown">Profilaxia (Limpeza)</span>
+                        <i class="fas fa-plus text-brand-brown icon-plus font-light"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <p class="font-light text-sm text-brand-charcoal pt-2 pb-4">Remoção de placa bacteriana e tártaro, garantindo a saúde gengival e a prevenção de cáries com polimento de alto brilho.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-b border-brand-brown/30 pb-4">
+                    <button class="w-full flex justify-between items-center py-4 focus:outline-none">
+                        <span class="font-serif text-xl text-brand-brown">Restauração Estética</span>
+                        <i class="fas fa-plus text-brand-brown icon-plus font-light"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <p class="font-light text-sm text-brand-charcoal pt-2 pb-4">Devolução da forma, função e estética dos dentes utilizando resinas compostas de última geração, imperceptíveis a olho nu.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-b border-brand-brown/30 pb-4">
+                    <button class="w-full flex justify-between items-center py-4 focus:outline-none">
+                        <span class="font-serif text-xl text-brand-brown">Clareamento Dental</span>
+                        <i class="fas fa-plus text-brand-brown icon-plus font-light"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <p class="font-light text-sm text-brand-charcoal pt-2 pb-4">Protocolos avançados a laser ou caseiros para iluminar o seu sorriso com segurança e sem sensibilidade excessiva.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-b border-brand-brown/30 pb-4">
+                    <button class="w-full flex justify-between items-center py-4 focus:outline-none">
+                        <span class="font-serif text-xl text-brand-brown">Prótese e Extração</span>
+                        <i class="fas fa-plus text-brand-brown icon-plus font-light"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <p class="font-light text-sm text-brand-charcoal pt-2 pb-4">Procedimentos cirúrgicos seguros e reabilitação oral completa para devolver a mastigação e harmonia facial.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-b border-brand-brown/30 pb-4 mt-8">
+                    <button class="w-full flex justify-between items-center py-4 focus:outline-none">
+                        <span class="font-serif text-xl text-brand-brown">Toxina Botulínica (Botox)</span>
+                        <i class="fas fa-plus text-brand-brown icon-plus font-light"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <p class="font-light text-sm text-brand-charcoal pt-2 pb-4">Suavização de rugas e linhas de expressão, além de tratamento para sorriso gengival e bruxismo.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-b border-brand-brown/30 pb-4">
+                    <button class="w-full flex justify-between items-center py-4 focus:outline-none">
+                        <span class="font-serif text-xl text-brand-brown">Preenchimento Labial e Facial</span>
+                        <i class="fas fa-plus text-brand-brown icon-plus font-light"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <p class="font-light text-sm text-brand-charcoal pt-2 pb-4">Uso de ácido hialurônico para volumização labial, contorno mandibular, olheiras e maçãs do rosto com extrema naturalidade.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-b border-brand-brown/30 pb-4">
+                    <button class="w-full flex justify-between items-center py-4 focus:outline-none">
+                        <span class="font-serif text-xl text-brand-brown">Lipo de Papada Química</span>
+                        <i class="fas fa-plus text-brand-brown icon-plus font-light"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <p class="font-light text-sm text-brand-charcoal pt-2 pb-4">Redução enzimática da gordura submentoniana (papada), melhorando o contorno do rosto sem cirurgia.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item border-b border-brand-brown/30 pb-4">
+                    <button class="w-full flex justify-between items-center py-4 focus:outline-none">
+                        <span class="font-serif text-xl text-brand-brown">Skinbooster</span>
+                        <i class="fas fa-plus text-brand-brown icon-plus font-light"></i>
+                    </button>
+                    <div class="accordion-content">
+                        <p class="font-light text-sm text-brand-charcoal pt-2 pb-4">Hidratação injetável profunda que melhora a elasticidade, viço e firmeza da pele de dentro para fora.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="resultados" class="py-24 bg-nude-light">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="font-serif text-4xl lg:text-5xl text-brand-brown mb-4">Resultados</h2>
+                <p class="font-light text-brand-charcoal tracking-wide">A transformação através da nossa lente clínica.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 fade-in">
+                <div class="group relative overflow-hidden bg-nude-dark aspect-[4/5] flex items-center justify-center">
+                    <div class="absolute inset-0 bg-brand-brown/10 group-hover:bg-transparent transition duration-500 z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&q=80&w=600" alt="Clareamento" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition duration-700">
+                    <div class="absolute bottom-6 left-6 z-20">
+                        <span class="bg-nude-light/90 px-4 py-2 text-[10px] uppercase tracking-widest text-brand-brown">Clareamento</span>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden bg-nude-dark aspect-[4/5] flex items-center justify-center">
+                    <div class="absolute inset-0 bg-brand-brown/10 group-hover:bg-transparent transition duration-500 z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1512496015851-a1fbaf69ba1e?auto=format&fit=crop&q=80&w=600" alt="Preenchimento Labial" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition duration-700">
+                    <div class="absolute bottom-6 left-6 z-20">
+                        <span class="bg-nude-light/90 px-4 py-2 text-[10px] uppercase tracking-widest text-brand-brown">Preenchimento Labial</span>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden bg-nude-dark aspect-[4/5] flex items-center justify-center">
+                    <div class="absolute inset-0 bg-brand-brown/10 group-hover:bg-transparent transition duration-500 z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&q=80&w=600" alt="Restauração Estética" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition duration-700">
+                    <div class="absolute bottom-6 left-6 z-20">
+                        <span class="bg-nude-light/90 px-4 py-2 text-[10px] uppercase tracking-widest text-brand-brown">Restauração Estética</span>
+                    </div>
+                </div>
+                
+                <div class="group relative overflow-hidden bg-nude-dark aspect-[4/5] flex items-center justify-center">
+                    <div class="absolute inset-0 bg-brand-brown/10 group-hover:bg-transparent transition duration-500 z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&q=80&w=600" alt="Botox" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition duration-700">
+                    <div class="absolute bottom-6 left-6 z-20">
+                        <span class="bg-nude-light/90 px-4 py-2 text-[10px] uppercase tracking-widest text-brand-brown">Toxina Botulínica</span>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden bg-nude-dark aspect-[4/5] flex items-center justify-center">
+                    <div class="absolute inset-0 bg-brand-brown/10 group-hover:bg-transparent transition duration-500 z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1598256989800-fea5c5ce8721?auto=format&fit=crop&q=80&w=600" alt="Facetas" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition duration-700">
+                    <div class="absolute bottom-6 left-6 z-20">
+                        <span class="bg-nude-light/90 px-4 py-2 text-[10px] uppercase tracking-widest text-brand-brown">Reabilitação Oral</span>
+                    </div>
+                </div>
+
+                <div class="group relative overflow-hidden bg-nude-dark aspect-[4/5] flex items-center justify-center">
+                    <div class="absolute inset-0 bg-brand-brown/10 group-hover:bg-transparent transition duration-500 z-10"></div>
+                    <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&q=80&w=600" alt="Contorno Facial" class="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 transition duration-700">
+                    <div class="absolute bottom-6 left-6 z-20">
+                        <span class="bg-nude-light/90 px-4 py-2 text-[10px] uppercase tracking-widest text-brand-brown">Contorno Facial</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="agendamentos" class="relative bg-nude-dark overflow-hidden py-24 lg:py-0 lg:min-h-[80vh] flex items-center">
+        <div class="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none select-none z-0">
+            <span class="font-serif font-bold text-[30rem] text-brand-brown leading-none">SR</span>
+        </div>
+
+        <div class="max-w-7xl mx-auto w-full px-6 relative z-10 flex flex-col lg:flex-row items-center">
+            
+            <div class="w-full lg:w-1/2 flex flex-col items-center lg:items-start text-center lg:text-left fade-in">
+                <h2 class="font-serif text-5xl lg:text-6xl text-brand-brown mb-6">Agende seu <br> horário</h2>
+                <p class="font-light text-brand-charcoal mb-10 max-w-sm">
+                    Dê o primeiro passo para realçar a sua beleza natural. Entre em contato e reserve seu momento de cuidado.
+                </p>
+                <a href="https://wa.me/SEUNUMEROAQUI" target="_blank" class="bg-brand-brown text-nude-light border border-brand-brown px-12 py-5 uppercase text-sm tracking-widest hover:bg-transparent hover:text-brand-brown transition-all duration-300">
+                    Clique Aqui
+                </a>
+
+                <div class="mt-16 flex items-center space-x-6">
+                    <a href="#" class="text-brand-brown hover:text-brand-charcoal transition-colors text-xl"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-brand-brown hover:text-brand-charcoal transition-colors text-xl"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-brand-brown hover:text-brand-charcoal transition-colors text-xl"><i class="fab fa-whatsapp"></i></a>
+                </div>
+                <div class="mt-4 text-xs font-light text-brand-charcoal tracking-wider">
+                    <p>contato@drascarletrezende.com.br</p>
+                    <p class="mt-1">CRO-MG: XXXXXX</p>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-1/2 mt-16 lg:mt-0 flex justify-center lg:justify-end fade-in">
+                <div class="relative w-64 h-96 lg:w-80 lg:h-[500px]">
+                    <div class="absolute inset-0 border border-brand-brown/20 translate-x-4 translate-y-4"></div>
+                    <div class="absolute inset-0 bg-nude-light flex items-center justify-center text-center p-6 border border-brand-brown/10">
+                        <span class="text-xs tracking-widest font-light text-brand-brown">
+                            [ Inserir foto PNG <br> corpo livre da doutora <br> interagindo com layout ]
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <a href="https://wa.me/SEUNUMEROAQUI" target="_blank" class="fixed bottom-6 right-6 bg-[#25D366] text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 z-50">
+        <i class="fab fa-whatsapp text-3xl"></i>
+    </a>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-nude-light/95', 'backdrop-blur-sm', 'shadow-sm', 'border-b', 'border-nude-dark');
+            } else {
+                nav.classList.remove('bg-nude-light/95', 'backdrop-blur-sm', 'shadow-sm', 'border-b', 'border-nude-dark');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const links = document.querySelectorAll('.mobile-link');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        });
+
+        links.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+                menu.classList.remove('flex');
+            });
+        });
+
+        // Accordion functionality
+        const accordionItems = document.querySelectorAll('.accordion-item');
+        accordionItems.forEach(item => {
+            const button = item.querySelector('button');
+            button.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all others
+                accordionItems.forEach(otherItem => {
+                    otherItem.classList.remove('active');
+                });
+
+                // Toggle current
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Intersection Observer for Fade-in animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
